@@ -634,6 +634,42 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
+        // Insert Instagram photography section after Certifications
+        (function addInstagramSection() {
+            if (document.getElementById('instagram-section')) return;
+            const certSection = document.getElementById('certifications');
+            if (!certSection || !certSection.parentNode) return;
+
+            const section = document.createElement('section');
+            section.id = 'instagram-section';
+            section.className = 'py-20 px-6';
+            section.innerHTML = `
+            <div class="max-w-7xl mx-auto text-center reveal">
+                <p class="text-brand-accent font-mono tracking-widest uppercase text-xs font-bold mb-4">Photography</p>
+                <h2 class="text-5xl md:text-7xl font-black tracking-tighter mb-8">Instagram.</h2>
+                <p class="text-gray-400 mb-6">Follow my photography work on Instagram for visual stories and frames.</p>
+                <a href="https://www.instagram.com/frames.legend/" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-4 justify-center bg-white text-black px-6 py-3 rounded-full font-black hover:bg-brand-primary transition-all">
+                <i class="fab fa-instagram text-2xl"></i>
+                <span>@frames.legend</span>
+                </a>
+            </div>
+            `;
+
+            certSection.parentNode.insertBefore(section, certSection.nextSibling);
+
+            // Ensure the dynamically added reveal element is observed so it becomes visible when scrolled
+            const newReveal = section.querySelector('.reveal');
+            if (newReveal && typeof observer !== 'undefined') {
+                observer.observe(newReveal);
+            }
+
+            // If it's already in view, activate it immediately
+            if (newReveal && newReveal.getBoundingClientRect().top < window.innerHeight) {
+                newReveal.classList.add('active');
+            }
+        })();
+
         const backToTop = document.getElementById('back-to-top');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 400) {
